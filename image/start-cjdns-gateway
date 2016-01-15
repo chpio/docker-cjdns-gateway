@@ -2,7 +2,7 @@
 
 ip6tables -t nat -A POSTROUTING -o $IFACE_CJDNS -j MASQUERADE
 ip6tables -A FORWARD -i $IFACE_CJDNS -o $IFACE_LAN -m state --state RELATED,ESTABLISHED -j ACCEPT
-
+ip6tables -A FORWARD -i $IFACE_LAN -o $IFACE_CJDNS -j ACCEPT
 
 ip addr add fdfc::1/64 dev $IFACE_LAN
 
