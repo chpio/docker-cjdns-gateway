@@ -3,7 +3,7 @@ FROM debian:jessie
 RUN { \
 	set -ex; \
 	apt-get update; \
-	apt-get install --no-install-recommends -y radvd; \
+	apt-get install --no-install-recommends -y radvd iptables; \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*; \
 }
 
