@@ -1,0 +1,14 @@
+cjdns:
+  image: chpio/cjdns:stable
+  net: host
+  cap_add:
+    - NET_ADMIN
+  volumes:
+    - ./data-cjdns:/data/cjdns
+  devices:
+    - /dev/net/tun
+gateway:
+  image: chpio/cjdns-gateway:latest
+  net: host
+  cap_add:
+    - NET_ADMIN

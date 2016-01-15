@@ -1,0 +1,19 @@
+#!/bin/sh -ex
+
+ip6tables -t nat -A POSTROUTING -o $IFACE_CJDNS -j MASQUERADE
+ip6tables -A FORWARD -i $IFACE_CJDNS -o $IFACE_LAN -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+
+ip addr add fdfc::1/64 dev $IFACE_LAN
+
+
+RADCONF="/tmp/radvd-config"
+
+echo "interface $IFACE_LAN {\n" > $RADCONF
+echo "  AdvSendAdvert on;\n" >> $RADCONF
+echo "  prefix fdfc::1/64 {\n" >> $RADCONF
+echo "    AdvRouterAddr on;\n" >> $RADCONF
+echo "  };\n" >> $RADCONF
+echo "};\n" >> $RADCONF
+
+exec radvd --config $RADCONF --logmethod stderr
