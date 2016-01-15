@@ -9,6 +9,9 @@ cjdns:
     - /dev/net/tun
 gateway:
   image: chpio/cjdns-gateway:latest
+  environment:
+    IFACE_LAN: eth0
+    IFACE_CJDNS: tun0
   net: host
   cap_add:
     - NET_ADMIN
